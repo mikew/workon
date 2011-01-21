@@ -14,6 +14,8 @@ module Workon
   end
   
   def self.commit(path)
+    Dir.chdir path
+    
     Workon::Actor.all.each do |klass|
       klass.new(path).commit
     end

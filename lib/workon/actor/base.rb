@@ -35,6 +35,18 @@ module Workon
         output = %x(#{command})
         return output
       end
+      
+      def screen(command, scope = nil)
+        identifier = screen_scope scope
+        
+        run %(screen -dmS #{identifier} #{command})
+        puts %(Reconnect with `screen -r #{identifier}')
+      end
+      
+      def screen_scope(scope = nil)
+        scope ||= self.class.name.to_s.split('::').last
+        "#{project}.#{scope}".downcase
+      end
     end
   end
 end
