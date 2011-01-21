@@ -20,4 +20,4 @@ module Workon
   end
 end
 
-Workon.find "workon" if __FILE__ == $0
+Workon.find "goaltender" if __FILE__ == $0

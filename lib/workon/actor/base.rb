@@ -25,9 +25,15 @@ module Workon
         run command
       end
       
+      def system(command)
+        puts "Running #{command}"
+        Kernel.system command
+      end
+      
       def run(command)
         puts "Running #{command}"
-        %x(#{command})
+        output = %x(#{command})
+        return output
       end
     end
   end

@@ -6,7 +6,8 @@ module Workon
       end
       
       def commit
-        run "git log" if project_uses_git?
+        output = %x(cd #{path} && git log --oneline -n 10) if project_uses_git?
+        puts output
       end
     end
   end
