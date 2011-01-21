@@ -9,8 +9,8 @@ Gem::Specification.new do |s|
   s.authors     = ["Mike Wyatt"]
   s.email       = ["wyatt.mike@gmail.com"]
   s.homepage    = ""
-  s.summary     = %q{TODO: Write a gem summary}
-  s.description = %q{TODO: Write a gem description}
+  s.summary     = %q{Runs actions based on directories}
+  s.description = %q{Runs actions based on directories}
   
   s.add_dependency "activesupport"
   s.add_development_dependency "rspec"
