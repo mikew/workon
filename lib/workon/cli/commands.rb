@@ -46,7 +46,7 @@ module Workon
         
         def self.helper_function
           <<'BASH'
-workon () {
+wo () {
   OLDIFS=$IFS
   IFS=$'\n'
 
