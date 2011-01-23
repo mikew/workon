@@ -3,5 +3,5 @@
 source_root = File.expand_path '../../lib', __FILE__
 $LOAD_PATH.unshift source_root
 
-require 'workon'
-Workon.find ARGV.first unless ARGV.empty?
+require 'workon/cli'
+Workon::CLI.execute
