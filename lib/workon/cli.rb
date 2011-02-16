@@ -5,7 +5,13 @@ require 'yaml'
 module Workon
   module CLI
     def self.execute
-      config = Workon.load_configuration(ARGV).options
+      Workon.load_configuration(ARGV)
+      config = Workon.config
+      
+      if config[:show_help]
+        puts Workon::Configuration.instance.parser
+        exit
+      end
       
       if config[:install_helper]
         Workon::CLI::Commands::InstallHelper.execute

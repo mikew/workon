@@ -3,10 +3,15 @@ require 'optparse'
 module Workon
   class Configuration
     attr_reader :options
+    attr_reader :parser
     
-    def initialize(args)
-      @options = { without: [], only: [], install_helper: false, dump_configuration: false, project: nil }
-      parse_options(args.dup)
+    def self.instance(*args)
+      @_instance ||= new(*args)
+    end
+    
+    def initialize(*args)
+      @options = { without: [], only: [], install_helper: false, dump_configuration: false, project: nil, show_help: false }
+      parse_options args.first unless args.empty?
     end
     
     def parse_options(args)
@@ -40,14 +45,10 @@ module Workon
         end
         
         o.on_tail('-h', '--help', 'Show this help information') do
-          puts o
-          exit
+          options[:show_help] = true
+          # exit
         end
       end
-    end
-    
-    def self.parse(args)
-      new(args)
     end
   end
 end

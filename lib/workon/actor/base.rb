@@ -8,6 +8,12 @@ module Workon
         @_subclasses
       end
       
+      def self.option(*args, &block)
+        Workon::Configuration.instance.parser.on(*args) do |v|
+          block.call(Workon.config, v)
+        end
+      end
+      
       def self.inherited(base)
         @_subclasses ||= []
         @_subclasses << base
@@ -15,6 +21,10 @@ module Workon
       
       def initialize(path)
         @path = path
+      end
+      
+      def options
+        @options ||= Workon.config
       end
       
       def project

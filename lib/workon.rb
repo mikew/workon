@@ -1,7 +1,7 @@
 $LOAD_PATH.unshift File.expand_path("../", __FILE__)
 
-require 'workon/actor'
 require 'workon/configuration'
+require 'workon/actor'
 require "workon/version"
 
 module Workon
@@ -27,10 +27,10 @@ module Workon
   end
   
   def self.load_configuration(args)
-    @config = Workon::Configuration.parse(args)
+    Workon::Configuration.instance.parse_options args
   end
   
   def self.config
-    @config
+    Workon::Configuration.instance.options  
   end
 end
