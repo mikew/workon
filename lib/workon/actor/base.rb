@@ -4,19 +4,23 @@ module Workon
       attr_reader :path
       attr_reader :project
       
-      def self.subclasses
-        @_subclasses
+      def self.inherited(base)
+        @_subclasses ||= []
+        @_subclasses << base
       end
       
       def self.option(*args, &block)
         Workon::Configuration.instance.parser.on(*args) do |v|
-          block.call(Workon.config, v)
+          block.call(v)
         end
       end
       
-      def self.inherited(base)
-        @_subclasses ||= []
-        @_subclasses << base
+      def self.options
+        Workon.config
+      end
+      
+      def self.subclasses
+        @_subclasses
       end
       
       def initialize(path)
@@ -24,7 +28,7 @@ module Workon
       end
       
       def options
-        @options ||= Workon.config
+        self.class.options
       end
       
       def project

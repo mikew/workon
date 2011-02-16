@@ -1,7 +1,7 @@
 module Workon
   module Actor
     class WebBrowser < Base
-      option('--host HOST', 'Ping this host') { |o,v| o[:host] = v}
+      option('--host HOST', 'Ping this host') { |v| options[:host] = v}
       
       def command
         host_name = options[:host].empty? ? %{#{project}.local} : options[:host]

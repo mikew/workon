@@ -18,6 +18,9 @@ module Workon
         exit
       end
       
+      p config
+      exit
+      
       raise OptionParser::MissingArgument if config[:project].nil?
       
       if config[:dump_configuration]
