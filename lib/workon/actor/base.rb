@@ -31,8 +31,18 @@ module Workon
         self.class.options
       end
       
+      def has_option?(key)
+        key = key.to_sym
+        
+        !options[key].nil? && !options[key].empty?
+      end
+      
+      def fetch_option(key, default = nil)
+        has_option?(key) ? options[key] : default
+      end
+      
       def project
-        @project ||= @path.split('/').last
+        @project ||= Workon.project_name
       end
       
       def commit

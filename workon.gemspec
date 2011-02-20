@@ -12,8 +12,8 @@ Gem::Specification.new do |s|
   s.summary     = %q{Runs actions based on directories}
   s.description = %q{Runs actions based on directories}
   
-  s.add_dependency "activesupport"
-  s.add_development_dependency "rspec"
+  # s.add_dependency "activesupport"
+  # s.add_development_dependency "rspec"
   
   s.rubyforge_project = "workon"
 

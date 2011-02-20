@@ -1,12 +1,10 @@
 require 'workon'
 require 'workon/cli/commands'
-require 'yaml'
 
 module Workon
   module CLI
     def self.execute
-      Workon.load_configuration(ARGV)
-      config = Workon.config
+      config = Workon.config ARGV
       
       if config[:show_help]
         puts Workon::Configuration.instance.parser
@@ -18,16 +16,16 @@ module Workon
         exit
       end
       
-      p config
-      exit
+      raise OptionParser::MissingArgument unless Workon.has_project?
       
-      raise OptionParser::MissingArgument if config[:project].nil?
+      Workon.find_project
       
       if config[:dump_configuration]
-        puts config.to_yaml
+        Workon::Configuration.instance.dump_to_project_rc
+        exit
       end
       
-      Workon.find_project config[:project]
+      Workon.commit!
     end
   end
 end

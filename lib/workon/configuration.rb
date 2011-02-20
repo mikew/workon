@@ -1,4 +1,5 @@
 require 'optparse'
+require 'yaml'
 
 module Workon
   class Configuration
@@ -48,6 +49,39 @@ module Workon
           options[:show_help] = true
           # exit
         end
+      end
+    end
+    
+    def project_rc_path
+      @project_rc_path ||= File.join Workon.project_path, '.workonrc'
+    end
+    
+    def project_rc_exists?
+      File.exist? project_rc_path
+    end
+    
+    def merge_project_rc
+      if project_rc_exists?
+        opts = YAML.load_file(project_rc_path)
+        @options.merge! opts
+      end
+    end
+    
+    def dump_to_project_rc
+      o = options.dup
+      o.delete :install_helper
+      o.delete :dump_configuration
+      o.delete :project
+      o.delete :show_help
+      
+      begin
+        File.open(project_rc_path, 'w') do |f|
+          YAML.dump o, f
+        end
+        
+        puts %(Saved workon configuration to #{project_rc_path})
+      rescue
+        STDERR.puts %(Could not save workon configuration to #{project_rc_path})
       end
     end
   end

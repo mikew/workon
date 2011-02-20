@@ -8,8 +8,10 @@ require 'workon/actor/passenger'
 
 module Workon
   module Actor
-    def self.all
-      Workon::Actor::Base.subclasses
+    include Enumerable
+    
+    def self.each(&block)
+      Workon::Actor::Base.subclasses.each {|c| yield c }
     end
   end
 end
