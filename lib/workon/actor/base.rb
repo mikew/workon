@@ -60,8 +60,8 @@ module Workon
       
       def run(command)
         puts "Running #{command}"
-        # output = %x(#{command})
-        # return output
+        output = %x(#{command})
+        return output
       end
       
       def screen(command, scope = nil)
