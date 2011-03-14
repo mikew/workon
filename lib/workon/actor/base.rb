@@ -23,6 +23,10 @@ module Workon
         @_subclasses
       end
       
+      def self.before(other = :all)
+        Workon::Actor.before self, other
+      end
+      
       def initialize(path)
         @path = path
       end
@@ -34,7 +38,7 @@ module Workon
       def has_option?(key)
         key = key.to_sym
         
-        !options[key].nil? && !options[key].empty?
+        !options[key].nil? && (options[key] || !options[key].empty?)
       end
       
       def fetch_option(key, default = nil)
@@ -56,8 +60,8 @@ module Workon
       
       def run(command)
         puts "Running #{command}"
-        output = %x(#{command})
-        return output
+        # output = %x(#{command})
+        # return output
       end
       
       def screen(command, scope = nil)

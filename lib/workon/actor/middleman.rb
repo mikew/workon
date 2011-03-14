@@ -1,12 +1,13 @@
 module Workon
   module Actor
     class Middleman < Base
-      before :web_browser
-      
       option('--middleman', 'Start mm-server') { |v| options[:middleman] = true }
       
       def commit
-        screen "mm-server" if fetch_option :middleman, false
+        if fetch_option :middleman, false
+          screen "mm-server"
+          run "sleep 3 && open http://localhost:4567/"
+        end
       end
     end
   end

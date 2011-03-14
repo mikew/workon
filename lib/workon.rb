@@ -35,7 +35,7 @@ module Workon
   def self.commit!
     Dir.chdir project_path
     
-    Workon::Actor.each do |klass|
+    Workon::Actor.ordered.each do |klass|
       klass.new(project_path).commit
     end
     
