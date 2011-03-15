@@ -20,6 +20,34 @@ module Workon
       options[:project] = args.first unless args.empty?
     end
     
+    def exists?(key)
+      key = key.to_sym
+      !blank? options[key]
+    end
+    
+    def set(key, value)
+      key = key.to_sym
+      options[key] = value
+    end
+    
+    def fetch(key, default = nil)
+      key = key.to_sym
+      
+      if !exists?(key) && !blank?(default)
+        set key, default
+      end
+      
+      options[key]
+    end
+    
+    def [](key)
+      fetch key
+    end
+    
+    def []=(key, value)
+      set key, value
+    end
+    
     def parser
       @parser ||= OptionParser.new do |o|
         o.banner = "Usage: #{File.basename($0)} [options] project"
@@ -83,6 +111,11 @@ module Workon
       rescue
         STDERR.puts %(Could not save workon configuration to #{project_rc_path})
       end
+    end
+    
+    private
+    def blank?(object)
+      object.respond_to?(:empty?) ? object.empty? : !object
     end
   end
 end

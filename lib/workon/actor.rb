@@ -7,22 +7,30 @@ module Workon
     end
     
     def self.before(actor = nil, other = nil)
-      @before ||= {}
+      @before ||= Hash.new { [] }
       
       return @before if actor.nil?
       raise ArgumentError if other.nil?
       
-      @before[other] = actor
+      @before[other] += [actor]
     end
     
     def self.ordered
       order ||= Workon::Actor::Base.subclasses.inject([]) do |memo, klass|
-        finder      = klass.name.split('::').last
-        other       = before[finder.to_sym]
-        should_add  = !Workon.config[:without].include?(finder) && !memo.include?(klass)
+        other       = encompass klass
+        should_add  = !Workon.config[:without].include?(klass.actor_name) && !memo.include?(klass)
         
-        should_add ? memo + (other ? [other, klass] : [klass]) : memo
+        should_add ? memo + other : memo
       end
+      
+      order
+    end
+    
+    def self.encompass(klass)
+      finder  = klass.actor_name.to_sym
+      _before = before[finder].map {|k| encompass k }
+      
+      (_before + [klass]).flatten
     end
   end
 end

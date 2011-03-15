@@ -48,6 +48,6 @@ module Workon
   
   def self.config(args = [])
     load_configuration args unless args.empty?
-    Workon::Configuration.instance.options  
+    Workon::Configuration.instance
   end
 end

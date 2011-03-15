@@ -27,6 +27,10 @@ module Workon
         Workon::Actor.before self, other
       end
       
+      def self.actor_name
+        name.split('::').last
+      end
+      
       def initialize(path)
         @path = path
       end
@@ -36,13 +40,11 @@ module Workon
       end
       
       def has_option?(key)
-        key = key.to_sym
-        
-        !options[key].nil? && (options[key] || !options[key].empty?)
+        options.exists? key
       end
       
       def fetch_option(key, default = nil)
-        has_option?(key) ? options[key] : default
+        options.fetch key, default
       end
       
       def project
