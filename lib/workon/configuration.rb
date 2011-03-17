@@ -60,12 +60,16 @@ module Workon
           options[:only] = v
         end
         
-        o.on('-d', '--dump-configuration', 'Dump workon configuration to project_path/.workon.yml') do
+        o.on('-d', '--dump-configuration', 'Dump workon configuration to project_path/.workonrc') do
           options[:dump_configuration] = true
         end
         
-        o.on_tail('--install-helper', 'Install `wo` helper function to ~/.bash_profile') do
+        o.on_tail('--install-helper', 'Install `wo\' helper function to ~/.bash_profile') do
           options[:install_helper] = true
+        end
+        
+        o.on_tail('-n', '--dry-run', 'Do not run any commands') do
+          options[:dry_run] = true
         end
         
         o.on_tail('-v', '--version', 'Show version information') do

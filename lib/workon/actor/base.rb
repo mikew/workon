@@ -62,7 +62,7 @@ module Workon
       
       def run(command)
         puts "Running #{command}"
-        output = %x(#{command})
+        output = %x(#{command}) unless options[:dry_run]
         return output
       end
       
