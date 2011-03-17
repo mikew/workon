@@ -51,7 +51,7 @@ wo () {
   IFS=$'\n'
 
   workon_bin=$(which workon)
-  output=$($workon_bin $1)
+  output=$($workon_bin $@)
 
   for line in $output; do
     echo $line
