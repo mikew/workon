@@ -28,7 +28,7 @@ module Workon
     
     unless candidate.nil?
       @_path = candidate
-      Workon::Configuration.instance.merge_project_rc
+      config.merge_project_rc
     end
   end
   
