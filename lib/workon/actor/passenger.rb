@@ -8,7 +8,7 @@ module Workon
       end
       
       def passenger_standalone_available?
-        !`which passenger`.empty?
+        has_command? 'passenger'
       end
       
       def commit

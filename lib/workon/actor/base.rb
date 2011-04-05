@@ -60,6 +60,10 @@ module Workon
         Kernel.system command
       end
       
+      def has_command?(command)
+        !`command -v #{command}`.empty?
+      end
+      
       def run(command)
         puts "Running #{command}"
         output = %x(#{command}) unless options[:dry_run]
@@ -67,9 +71,9 @@ module Workon
       end
       
       def screen(command)
-        @has_tmux ||= `which tmux`.length > 0
+        $has_tmux ||= has_command? 'tmux'
         
-        @has_tmux ? _tmux(command) : _screen(command)
+        $has_tmux ? _tmux(command) : _screen(command)
       end
       
       def _screen(command, scope = nil)
@@ -86,7 +90,7 @@ module Workon
       end
       
       def initialize_tmux
-        @tmux_initialized ||= begin
+        $tmux_initialized ||= begin
           run "tmux new-session -s #{tmux_session} \\; set-option -t #{tmux_session} set-remain-on-exit on \\; detach-client"
           true
         end
