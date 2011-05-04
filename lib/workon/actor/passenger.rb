@@ -14,7 +14,7 @@ module Workon
       def commit
         if is_rack_app? && passenger_standalone_available?
           port = fetch_option :port, 3000
-          screen "passenger start --port #{port}"
+          screen bundle_command("passenger start --port #{port}")
         end
       end
     end

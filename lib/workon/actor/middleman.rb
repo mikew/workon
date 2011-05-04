@@ -7,7 +7,7 @@ module Workon
       def commit
         if fetch_option :middleman, false
           port = fetch_option :port, 4567
-          screen "mm-server --port #{port}"
+          screen bundle_command("mm-server --port #{port}")
         end
       end
     end

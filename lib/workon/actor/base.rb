@@ -70,6 +70,14 @@ module Workon
         return output
       end
       
+      def bundle_command(command)
+        project_uses_bundler? ? "bundle exec #{command}" : command
+      end
+      
+      def project_uses_bundler?
+        $project_uses_bundler ||= File.exists? './Gemfile'
+      end
+      
       def screen(command)
         $has_tmux ||= has_command? 'tmux'
         
