@@ -5,7 +5,7 @@ require 'workon/actor'
 require "workon/version"
 
 module Workon
-  WORK_DIRS = '/Users/mike/Work/*/*'
+  WORK_DIRS = (ENV['WORKON_ROOT'] || ENV['HOME'] + '/Work') + '/*/*'
   
   def self.all_directories
     @_all_directories ||= Dir[WORK_DIRS]
