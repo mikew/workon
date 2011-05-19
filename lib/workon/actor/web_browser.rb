@@ -8,8 +8,9 @@ module Workon
         host_name   = fetch_option :host, %{#{project}.local}
         port_number = fetch_option :port, nil
         
-        command, qualified = port_number.nil? ? ping_test(host_name) : netstat_test(port_number)
-        %{#{command} && open http://#{qualified}}
+        command, qualified  = port_number.nil? ? ping_test(host_name) : netstat_test(port_number)
+        opener              = open_with_default "http://#{qualified}"
+        %(#{command} && #{opener})
       end
       
       private

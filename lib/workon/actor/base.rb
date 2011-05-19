@@ -52,7 +52,7 @@ module Workon
       end
       
       def commit
-        run command
+        run command unless command.nil? || command.empty?
       end
       
       def system(command)
@@ -61,7 +61,7 @@ module Workon
       end
       
       def has_command?(command)
-        !`command -v #{command}`.empty?
+        !`command -v '#{command}'`.empty?
       end
       
       def run(command)
@@ -115,6 +115,12 @@ module Workon
       
       def tmux_window
         self.class.actor_name.downcase
+      end
+      
+      def open_with_default(thing)
+        $open_command ||= has_command?('xdg-open') ? 'xdg-open' : 'open'
+        
+        "#{$open_command} #{thing}"
       end
     end
   end

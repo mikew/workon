@@ -2,7 +2,7 @@ module Workon
   module Actor
     class Finder < Base
       def command
-        "open #{path}"
+        open_with_default path
       end
     end
   end

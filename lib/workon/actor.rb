@@ -36,7 +36,7 @@ module Workon
 end
 
 require 'workon/actor/base'
-require 'workon/actor/text_mate'
+require 'workon/actor/editor'
 require 'workon/actor/web_browser'
 require 'workon/actor/finder'
 require 'workon/actor/git'
