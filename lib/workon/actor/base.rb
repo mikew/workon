@@ -57,7 +57,7 @@ module Workon
       
       def run(command)
         puts "Running #{command}"
-        Kernel.system command
+        Kernel.system command unless options[:dry_run]
       end
       
       def has_command?(command)
