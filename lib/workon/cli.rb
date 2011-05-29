@@ -20,6 +20,11 @@ module Workon
       
       Workon.find_project
       
+      if config[:show_project]
+        puts Workon.project_path
+        exit
+      end
+
       if config[:dump_configuration]
         Workon::Configuration.instance.dump_to_project_rc
         exit

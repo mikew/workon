@@ -30,35 +30,21 @@ module Workon
         end
         
         def self.finder
-          "# Created by workon version #{Workon::VERSION}\n"
+          "# Created by workon\n"
         end
         
         def self.installed?
           !(File.read(bash_profile_path) =~ /#{finder}/).nil?
         end
         
-        def self.helper_message(path)
-          lines = [ "This is for the bash helper function",
-                    "cd #{path}" ]
-                    
-          lines.each {|l| puts l } if installed?
-        end
-        
         def self.helper_function
           <<'BASH'
 wo () {
-  OLDIFS=$IFS
-  IFS=$'\n'
+  PROJECT=${!#}
+  PROJECT_PATH=$(workon -P ${PROJECT})
 
-  workon_bin=$(which workon)
-  output=$($workon_bin $@)
-
-  for line in $output; do
-    echo $line
-  done
-
-  eval $line
-  IFS=$OLDIFS
+  workon $@
+  eval "cd $PROJECT_PATH"
 }
 BASH
         end

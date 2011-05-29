@@ -11,7 +11,7 @@ module Workon
     end
     
     def initialize(*args)
-      @options = { without: [], only: [], install_helper: false, dump_configuration: false, project: nil, show_help: false }
+      @options = { show_project: false, without: [], only: [], install_helper: false, dump_configuration: false, project: nil, show_help: false }
       parse_options args.first unless args.empty?
     end
     
@@ -68,6 +68,10 @@ module Workon
           options[:install_helper] = true
         end
         
+        o.on_tail('-P', '--show-project', TrueClass, "Echo project's directory") do
+          options[:show_project] = true
+        end
+
         o.on_tail('-n', '--dry-run', 'Do not run any commands') do
           options[:dry_run] = true
         end

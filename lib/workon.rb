@@ -38,8 +38,6 @@ module Workon
     Workon::Actor.ordered.each do |klass|
       klass.new(project_path).commit
     end
-    
-    Workon::CLI::Commands::InstallHelper.helper_message(project_path)
   end
   
   def self.load_configuration(args)
