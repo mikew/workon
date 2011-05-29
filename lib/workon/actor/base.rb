@@ -55,7 +55,7 @@ module Workon
         run command unless command.nil? || command.empty?
       end
       
-      def system(command)
+      def run(command)
         puts "Running #{command}"
         Kernel.system command
       end
@@ -64,7 +64,7 @@ module Workon
         !`command -v '#{command}'`.empty?
       end
       
-      def run(command)
+      def capture(command)
         puts "Running #{command}"
         output = %x(#{command}) unless options[:dry_run]
         return output
