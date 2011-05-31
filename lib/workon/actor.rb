@@ -22,7 +22,7 @@ module Workon
         
         should_add ? memo + other : memo
       end
-      
+      p order
       order
     end
     
@@ -43,3 +43,4 @@ require 'workon/actor/git'
 require 'workon/actor/watchr'
 require 'workon/actor/passenger'
 require 'workon/actor/middleman'
+require 'workon/actor/guard'

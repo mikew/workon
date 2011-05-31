@@ -56,7 +56,7 @@ module Workon
       end
       
       def run(command)
-        puts "Running #{command}"
+        puts "Running #{command}" unless $TESTING
         Kernel.system command unless options[:dry_run]
       end
       
@@ -65,7 +65,7 @@ module Workon
       end
       
       def capture(command)
-        puts "Running #{command}"
+        puts "Running #{command}" unless $TESTING
         output = %x(#{command}) unless options[:dry_run]
         return output
       end
