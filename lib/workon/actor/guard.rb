@@ -7,7 +7,7 @@ module Workon
 
       private
       def has_guardfile?
-        !!Dir['Guardfile']
+        !Dir['Guardfile'].empty?
       end
     end
   end

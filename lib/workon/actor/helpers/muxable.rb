@@ -1,6 +1,7 @@
 module Workon::Actor::Helpers::Muxable
   def screen(command)
     $has_tmux ||= has_command? 'tmux'
+    command = rvm_exec command
 
     $has_tmux ? _tmux(command) : _screen(command)
   end
@@ -36,5 +37,9 @@ module Workon::Actor::Helpers::Muxable
 
   def tmux_window
     self.class.actor_name.downcase
+  end
+
+  def rvm_exec(command)
+    Dir['./.rvmrc'].empty? ? command : "rvm --with-rubies default-with-rvmrc exec #{command}"
   end
 end
