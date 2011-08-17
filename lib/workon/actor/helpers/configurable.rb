@@ -4,7 +4,7 @@ module Workon
       module Configurable
         module ClassMethods
           def option(*args, &block)
-            Workon::Configuration.instance.parser.on(*args) do |v|
+            Workon.config.parser.on(*args) do |v|
               block.call(v)
             end
           end

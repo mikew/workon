@@ -1,5 +1,8 @@
 $TESTING = true
 
-$:.push File.expand_path('../lib', __FILE__)
 require 'workon'
+require 'workon/rspec_helpers'
 
+RSpec.configure do |c|
+  c.include Workon::RSpecHelpers
+end
