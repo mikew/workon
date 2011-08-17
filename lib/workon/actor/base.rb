@@ -1,8 +1,3 @@
-require 'workon/actor/helpers/configurable'
-require 'workon/actor/helpers/commandable'
-require 'workon/actor/helpers/muxable'
-require 'workon/actor/helpers/bundler'
-
 module Workon
   module Actor
     class Base
@@ -12,7 +7,6 @@ module Workon
       include Workon::Actor::Helpers::Bundler
 
       attr_reader :path
-      attr_reader :project
 
       def self.inherited(base)
         @_subclasses ||= []
@@ -40,7 +34,19 @@ module Workon
       end
 
       def commit
-        run command unless command.nil? || command.empty?
+        run command if !!command
+      end
+
+      def project_has_file?(file)
+        !Dir[path + "/#{file}"].empty?
+      end
+
+      def project_has_one_of?(*files)
+        files.any? { |f| project_has_file? f }
+      end
+
+      def project_has_folder?(folder)
+        File.directory? path + "/#{folder}"
       end
 
       def open_with_default(thing)

@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
-# source_root = File.expand_path '../../lib', __FILE__
-# $LOAD_PATH.unshift source_root
+source_root = File.expand_path '../../lib', __FILE__
+$LOAD_PATH.unshift source_root
 
 require 'workon/cli'
 Workon::CLI.execute

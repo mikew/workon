@@ -1,7 +1,7 @@
 module Workon
   autoload :Configuration, 'workon/configuration'
-  autoload :Actor, 'workon/actor'
-  autoload :Version, 'workon/version'
+  # autoload :Actor, 'workon/actor'
+  autoload :VERSION, 'workon/version'
 
   WORK_DIRS = (ENV['WORKON_ROOT'] || ENV['HOME'] + '/Work') + '/*/*'
 
@@ -34,6 +34,7 @@ module Workon
     Dir.chdir project_path
 
     Workon::Actor.ordered.each do |klass|
+      next if config[:without].include? klass.actor_name
       klass.new(project_path).commit
     end
   end
@@ -42,3 +43,5 @@ module Workon
     @config ||= Configuration.new args
   end
 end
+
+require 'workon/actor'

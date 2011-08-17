@@ -4,7 +4,7 @@ module Workon
       before :WebBrowser
 
       def has_unicorn_config?
-        !Dir['config/unicorn.rb'].empty?
+        project_has_file? 'config/unicorn.rb'
       end
 
       def commit

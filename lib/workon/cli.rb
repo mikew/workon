@@ -25,7 +25,8 @@ module Workon
     end
 
     def self.execute
-      @config = Workon.config ARGV
+      Workon.config.merge_options ARGV
+      @config = Workon.config
 
       show_help      if @config[:show_help]
       install_helper if @config[:install_helper]

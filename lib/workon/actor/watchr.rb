@@ -2,10 +2,10 @@ module Workon
   module Actor
     class Watchr < Base
       def watchr_file_exists?
-        !Dir['*.watchr'].empty?
+        project_has_file? '*.watchr'
       end
-      
-      def commit
+
+      def command
         screen "watchr" if watchr_file_exists?
       end
     end
