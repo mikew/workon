@@ -107,7 +107,6 @@ module Workon
 
     def merge_project_rc
       if project_rc_exists?
-        p YAML.load_file(project_rc_path)
         merge_options YAML.load_file(project_rc_path)
       end
     end
@@ -118,6 +117,7 @@ module Workon
       o.delete :dump_configuration
       o.delete :project
       o.delete :show_help
+      o.delete :show_project
 
       begin
         File.open(project_rc_path, 'w') do |f|
