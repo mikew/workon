@@ -1,12 +1,11 @@
 module Workon
   module Actor
     class Base
-      include Workon::Actor::Helpers::Configurable
+      include Workon::Helpers
       include Workon::Actor::Helpers::Commandable
-      include Workon::Actor::Helpers::Muxable
-      include Workon::Actor::Helpers::Bundler
+      include Workon::Actor::Helpers::Configurable
 
-      attr_reader :path
+      attr_reader :path, :project
 
       def self.inherited(base)
         @_subclasses ||= []
@@ -26,33 +25,15 @@ module Workon
       end
 
       def initialize(path)
-        @path = path
-      end
-
-      def project
-        @project ||= Workon.project_name
+        @path    = path
+        @project = Workon.project_name
       end
 
       def commit
-        run command if !!command
-      end
+        return if command.nil?
 
-      def project_has_file?(file)
-        !Dir[path + "/#{file}"].empty?
-      end
-
-      def project_has_one_of?(*files)
-        files.any? { |f| project_has_file? f }
-      end
-
-      def project_has_folder?(folder)
-        File.directory? path + "/#{folder}"
-      end
-
-      def open_with_default(thing)
-        $open_command ||= has_command?('xdg-open') ? 'xdg-open' : 'open'
-
-        "#{$open_command} #{thing}"
+        to_run = interpret_command command
+        to_run.run if !!to_run
       end
     end
   end

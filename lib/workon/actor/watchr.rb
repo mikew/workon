@@ -6,7 +6,7 @@ module Workon
       end
 
       def command
-        screen "watchr" if watchr_file_exists?
+        mux "watchr" if watchr_file_exists?
       end
     end
   end

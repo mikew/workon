@@ -2,7 +2,9 @@ module Workon
   module Actor
     class Guard < Base
       def command
-        screen bundle_command("guard --clear") if has_guardfile?
+        return unless has_guardfile?
+
+        mux 'guard --clear', :bundler
       end
 
       private

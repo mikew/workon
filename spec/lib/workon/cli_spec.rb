@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'workon/cli'
 
 describe Workon::CLI do
-  before(:each) { Workon.instance_eval { @config = nil } }
+  before(:each) { clear_workon_config! }
 
   it "shows help when asked" do
     Workon.config show_help: true
@@ -26,5 +26,11 @@ describe Workon::CLI do
     Workon.config dump_configuration: true, project: 'foo'
     described_class.should_receive(:dump_configuration).and_return { exit }
     expect { described_class.execute }.to raise_error SystemExit
+  end
+
+  it "fails without a project" do
+    described_class.stub(:cli_options).and_return []
+    Workon.config.merge_options project: nil
+    expect { described_class.execute }.to raise_error OptionParser::MissingArgument
   end
 end

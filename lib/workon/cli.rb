@@ -25,7 +25,7 @@ module Workon
     end
 
     def self.execute
-      Workon.config.merge_options ARGV
+      Workon.config.merge_options cli_options
       @config = Workon.config
 
       show_help      if @config[:show_help]
@@ -39,6 +39,10 @@ module Workon
       dump_configuration if @config[:dump_configuration]
 
       Workon.commit!
+    end
+
+    def self.cli_options
+      ARGV
     end
   end
 end

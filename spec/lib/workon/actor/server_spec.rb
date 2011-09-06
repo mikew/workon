@@ -5,6 +5,6 @@ describe Workon::Actor::Server do
   subject { described_class.new '/Users/mike/Work/ruby/henceforth' }
 
   it "works?" do
-    subject.commit
+    # subject.commit
   end
 end

@@ -4,38 +4,42 @@ module Workon
       option('--server SERVER', 'Use this server (auto,middleman,passenger,pow,unicorn)') { |v| options[:server] = v}
       before :WebBrowser
 
-      def commit
+      def command
         actual = fetch_option :server, 'auto'
         valid = %w(auto middleman passenger pow unicorn)
 
         return unless valid.include? actual
-        send :"commit_for_#{actual}"
+        send :"command_for_#{actual}"
       end
 
       private
-      def commit_for_auto
-        commit_for_unicorn   and return if project_has_one_of?('unicorn.rb', 'config/unicorn.rb')
-        commit_for_passenger and return if project_has_file?('config.ru') && has_command?('passenger')
+      def command_for_auto
+        command_for_unicorn   and return if project_has_one_of?('unicorn.rb', 'config/unicorn.rb')
+        command_for_passenger and return if project_has_file?('config.ru') && has_command?('passenger')
       end
 
-      def commit_for_passenger
+      def command_for_passenger
+        options[:host] = 'localhost'
         port = fetch_option :port, 3000
-        screen bundle_command("passenger start --port #{port}")
+        mux "passenger start --port #{port}", :bundler
       end
 
-      def commit_for_middleman
+      def command_for_middleman
+        options[:host] = 'localhost'
         port = fetch_option :port, 4567
-        screen bundle_command("mm-server --port #{port}")
+        mux "mm-server --port #{port}", :bundler
       end
 
-      def commit_for_pow
+      def command_for_pow
         options[:port] = nil
         options[:host] = "#{project}.dev"
+        nil
       end
 
-      def commit_for_unicorn
+      def command_for_unicorn
+        options[:host] = 'localhost'
         port = fetch_option :port, 8080
-        screen bundle_command("unicorn_rails -c #{path}/config/unicorn.rb -l #{port}")
+        mux 'unicorn_rails -c config/unicorn-rb', :bundler
       end
     end
   end

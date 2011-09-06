@@ -2,10 +2,11 @@ require 'spec_helper'
 
 describe Workon do
   before do
-    Workon.stub(:all_directories) { %w(/code/foo /code/bar) }
+    stub_directories!
+    disable_banners!
   end
 
-  before(:each) { Workon.instance_eval { @config = nil } }
+  before(:each) { clear_workon_config! }
 
   it "finds a project" do
     Workon.config[:project] = 'foo'
@@ -28,7 +29,7 @@ describe Workon do
   it "ignores things in --without" do
     Dir.stub(:chdir).with(Workon.project_path)
     Workon::Actor::Server.should_not_receive :new
-    Workon.config project: 'foo', without: 'Server', dry_run: true
+    Workon.config project: 'foo', without: ['Server'], dry_run: true
     Workon.find_project
     Workon.commit!
   end

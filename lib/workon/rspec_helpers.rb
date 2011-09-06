@@ -7,5 +7,17 @@ module Workon
       subject.stub(:project_rc_exists?).and_return true
       subject.stub(:project_rc_path).and_return    fixture_path
     end
+
+    def stub_directories!(dirs = %w(/code/foo /code/bar))
+      Workon.stub(:all_directories) { dirs }
+    end
+
+    def clear_workon_config!
+      Workon.instance_eval { @config = nil }
+    end
+
+    def disable_banners!
+      STDOUT.stub :puts
+    end
   end
 end

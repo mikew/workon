@@ -1,7 +1,8 @@
 module Workon
+  autoload :Command,       'workon/command'
   autoload :Configuration, 'workon/configuration'
-  # autoload :Actor, 'workon/actor'
-  autoload :VERSION, 'workon/version'
+  autoload :Helpers,       'workon/helpers'
+  autoload :VERSION,       'workon/version'
 
   WORK_DIRS = (ENV['WORKON_ROOT'] || ENV['HOME'] + '/Work') + '/*/*'
 

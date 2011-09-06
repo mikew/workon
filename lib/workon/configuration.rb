@@ -6,7 +6,7 @@ module Workon
     attr_reader :options
     attr_reader :parser
 
-    def initialize(options = nil)
+    def initialize(_options = nil)
       @options = {
         show_project:        false,
         without:             [],
@@ -17,7 +17,7 @@ module Workon
         show_help:           false
       }
 
-      merge_options options unless blank? options
+      merge_options _options unless blank? _options
     end
 
     def merge_options(args)
