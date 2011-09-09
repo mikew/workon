@@ -19,27 +19,29 @@ module Workon
       end
 
       def command_for_passenger
-        options[:host] = 'localhost'
-        port = fetch_option :port, 3000
-        mux "passenger start --port #{port}", :bundler
+        bundled_server "passenger start --port %{port}", 3000
       end
 
       def command_for_middleman
-        options[:host] = 'localhost'
-        port = fetch_option :port, 4567
-        mux "mm-server --port #{port}", :bundler
+        bundled_server "mm-server --port %{port}", 4567
       end
 
       def command_for_pow
         options[:port] = nil
         options[:host] = "#{project}.dev"
+
         nil
       end
 
       def command_for_unicorn
-        options[:host] = 'localhost'
-        port = fetch_option :port, 8080
-        mux 'unicorn_rails -c config/unicorn-rb', :bundler
+        bundled_server 'unicorn_rails -c config/unicorn-rb', 8080
+      end
+
+      def bundled_server(command, port, new_host = 'localhost')
+        options[:host] = new_host
+        new_port       = fetch_option :port, port
+
+        mux command % { port: port }, :bundler
       end
     end
   end

@@ -1,5 +1,5 @@
 module Workon::Command::Wrappers
-  include Workon::Helpers
+  include Workon::Helpers::Assertable
 
   @@default_open     = nil
   @@tmux_initialized = false

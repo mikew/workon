@@ -1,4 +1,4 @@
-module Workon::Actor::Helpers::Configurable
+module Workon::Helpers::Configurable
   module ClassMethods
     def option(*args, &block)
       Workon.config.parser.on(*args) do |v|

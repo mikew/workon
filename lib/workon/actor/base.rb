@@ -1,9 +1,9 @@
 module Workon
   module Actor
     class Base
-      include Workon::Helpers
-      include Workon::Actor::Helpers::Commandable
-      include Workon::Actor::Helpers::Configurable
+      include Workon::Helpers::Assertable
+      include Workon::Helpers::Commandable
+      include Workon::Helpers::Configurable
 
       attr_reader :path, :project
 

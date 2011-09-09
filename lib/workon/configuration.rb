@@ -86,7 +86,7 @@ module Workon
         end
 
         o.on_tail('-v', '--version', 'Show version information') do
-          puts Workon::VERSION
+          puts Workon::Version::STRING
           exit
         end
 

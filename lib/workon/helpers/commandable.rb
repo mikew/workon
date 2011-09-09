@@ -1,11 +1,11 @@
-module Workon::Actor::Helpers::Commandable
+module Workon::Helpers::Commandable
   def run(command, *wrappers)
     interpret_command(command, *wrappers)
   end
 
   def mux(command, *wrappers)
-    wrappers, env = wrappers_and_env(wrappers)
-    env[:mux_window] = self.class.actor_name
+    wrappers, env    = wrappers_and_env(wrappers)
+    env[:mux_window] = env.delete(:mux_window) || self.class.actor_name
 
     interpret_command(command, *wrappers, env).wrap!(:mux)
   end

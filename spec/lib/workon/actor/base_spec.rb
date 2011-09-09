@@ -1,10 +1,10 @@
 require 'spec_helper'
 
-class TestActor < Workon::Actor::Base
+class ActorBase < Workon::Actor::Base
   def command; nil; end
 end
 
-describe TestActor do
+describe ActorBase do
   subject { described_class.new '/code/foo' }
 
   it "has shorthands for running commands" do
