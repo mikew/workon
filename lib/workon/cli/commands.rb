@@ -39,12 +39,18 @@ module Workon
 
         def self.helper_function
           <<'BASH'
+# Created by workon
 wo () {
-  PROJECT=${!#}
-  PROJECT_PATH=$(workon -P ${PROJECT})
+  local project=${!#}
 
   workon $@
-  eval "cd $PROJECT_PATH"
+  cdp $project
+}
+
+cdp () {
+  local path=$(workon -P $1)
+
+  builtin cd $path
 }
 BASH
         end
