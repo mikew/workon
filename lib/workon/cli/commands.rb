@@ -39,7 +39,6 @@ module Workon
 
         def self.helper_function
           <<'BASH'
-# Created by workon
 wo () {
   local project=${!#}
 
